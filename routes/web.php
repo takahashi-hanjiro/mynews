@@ -17,28 +17,29 @@ Route::get('/', function () {
 
 
 
-Route::group(['prefix' => 'admin'], function() {
-    Route::get('news/create', 'Admin\NewsController@add')
-    ->middleware('auth');
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
+    Route::get('news/create', 'Admin\NewsController@add');
+    Route::post('news/create', 'Admin\NewsController@create');
 });
 
 /*
-【応用】11章で /admin/profile/create にアクセスしたら 
-ProfileController の add Action に割り当てるように設定しました。 
-ログインしていない状態で /admin/profile/create にアクセスした場合に
-ログイン画面にリダイレクトされるように設定しましょう。
+【応用】 routes/web.php を編集して、
+admin/profile/create に postメソッドでアクセスしたら 
+ProfileController の create Action に割り当てるように設定してください。
 */
 /*
-用】同様に 11章で /admin/profile/edit にアクセスしたら 
-ProfileController の edit Action に割り当てるように設定しました。 
-ログインしていない状態で /admin/profile/edit にアクセスした場合にログイン画面に
-リダイレクトされるように設定しましょう。
+【応用】 routes/web.php を編集して、 
+admin/profile/edit に postメソッドでアクセスしたら 
+ProfileController の update Action に割り当てるように設定してください。
 */
+
 
 Route::group(['prefix' => 'admin'], function() {
     Route::get('profile/create', 'Admin\ProfileController@add')->middleware('auth');
-    Route::get('profile/edut', 'Admin\ProfileController@edit')->middleware('auth');
-
+    Route::get('profile/edit', 'Admin\ProfileController@edit')->middleware('auth');
+    Route::post('profile/create', 'Admin\ProfileController@create')->middleware('auth');
+    Route::post('profile/edit', 'Admin\ProfileController@update');
+});
 
 Route::get('XXX', 'Admin\AAAController@bbb');
 
@@ -58,3 +59,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
