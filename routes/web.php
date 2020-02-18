@@ -15,26 +15,46 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Route::group(['prefix' => 'admin'], function() {
-    Route::get('news/create', 'Admin\NewsController@add');
+    Route::get('news/create', 'Admin\NewsController@add')
+    ->middleware('auth');
 });
 
-//以下課題部分
 /*
-http://XXXXXX.jp/XXX というアクセスが来たときに、
-AAAControllerのbbbというAction に渡すRoutingの設定」
-を書いてみてください。
+【応用】11章で /admin/profile/create にアクセスしたら 
+ProfileController の add Action に割り当てるように設定しました。 
+ログインしていない状態で /admin/profile/create にアクセスした場合に
+ログイン画面にリダイレクトされるように設定しましょう。
 */
+/*
+用】同様に 11章で /admin/profile/edit にアクセスしたら 
+ProfileController の edit Action に割り当てるように設定しました。 
+ログインしていない状態で /admin/profile/edit にアクセスした場合にログイン画面に
+リダイレクトされるように設定しましょう。
+*/
+
+Route::group(['prefix' => 'admin'], function() {
+    Route::get('profile/create', 'Admin\ProfileController@add')->middleware('auth');
+    Route::get('profile/edut', 'Admin\ProfileController@edit')->middleware('auth');
+
+
 Route::get('XXX', 'Admin\AAAController@bbb');
 
-/*
-【応用】 前章でAdmin/ProfileControllerを作成し、
-add Action, edit Actionを追加しました。web.phpを編集して、
-admin/profile/create にアクセスしたら ProfileController の add Action に、
-admin/profile/edit にアクセスしたら ProfileController の edit Action に
-割り当てるように設定してください。
-*/
 
 Route::get('admin/profile/create', 'Admin\ProfileController@add');
 
 Route::get('admin/profile/edit', 'Admin\ProfileController@edit');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
