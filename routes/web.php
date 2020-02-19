@@ -17,10 +17,6 @@ Route::get('/', function () {
 
 
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
-    Route::get('news/create', 'Admin\NewsController@add');
-    Route::post('news/create', 'Admin\NewsController@create');
-});
 
 /*
 【応用】 routes/web.php を編集して、
@@ -35,6 +31,8 @@ ProfileController の update Action に割り当てるように設定してく�
 
 
 Route::group(['prefix' => 'admin'], function() {
+    Route::get('news/create', 'Admin\NewsController@add');
+    Route::post('news/create', 'Admin\NewsController@create');
     Route::get('profile/create', 'Admin\ProfileController@add')->middleware('auth');
     Route::get('profile/edit', 'Admin\ProfileController@edit')->middleware('auth');
     Route::post('profile/create', 'Admin\ProfileController@create')->middleware('auth');
