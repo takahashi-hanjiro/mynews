@@ -18,26 +18,22 @@ Route::get('/', function () {
 
 
 
-/*
-【応用】 routes/web.php を編集して、
-admin/profile/create に postメソッドでアクセスしたら 
-ProfileController の create Action に割り当てるように設定してください。
-*/
-/*
-【応用】 routes/web.php を編集して、 
-admin/profile/edit に postメソッドでアクセスしたら 
-ProfileController の update Action に割り当てるように設定してください。
-*/
 
 
-Route::group(['prefix' => 'admin'], function() {
+
+Route::group(['prefix' => 'admin'],  function() {
     Route::get('news/create', 'Admin\NewsController@add');
     Route::post('news/create', 'Admin\NewsController@create');
+    Route::get('news', 'Admin\NewsController@index')->middleware('auth');
+    Route::get('news/edit', 'Admin\NewsController@edit')->middleware('auth');
+    Route::post('news/edit', 'Admin\NewsController@update')->middleware('auth');
+    Route::get('news/delete', 'Admin\NewsController@delete')->middleware('auth');
     Route::get('profile/create', 'Admin\ProfileController@add')->middleware('auth');
     Route::get('profile/edit', 'Admin\ProfileController@edit')->middleware('auth');
     Route::post('profile/create', 'Admin\ProfileController@create')->middleware('auth');
-    Route::post('profile/edit', 'Admin\ProfileController@update');
-    Route::get('news', 'Admin\NewsController@index')->middleware('auth');
+    Route::get('profile', 'Admin\ProfileController@index')->middleware('auth');
+    Route::post('profile/edit', 'Admin\ProfileController@update')->middleware('auth');
+    Route::get('profile/delete', 'Admin\ProfileController@delete')->middleware('auth');
 });
 
 Route::get('XXX', 'Admin\AAAController@bbb');
